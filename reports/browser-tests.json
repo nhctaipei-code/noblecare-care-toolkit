@@ -1,0 +1,56 @@
+{
+  "passed": true,
+  "languageTests": [
+    {
+      "entries": 36,
+      "lang": "zh-Hant",
+      "scroll": 305,
+      "steps": 6,
+      "title": "翻身與擺位",
+      "width": 305
+    },
+    {
+      "entries": 36,
+      "lang": "en",
+      "scroll": 305,
+      "steps": 6,
+      "title": "Turning and positioning",
+      "width": 305
+    },
+    {
+      "entries": 36,
+      "lang": "vi",
+      "scroll": 305,
+      "steps": 6,
+      "title": "Trở mình và đặt tư thế",
+      "width": 305
+    },
+    {
+      "entries": 36,
+      "lang": "id",
+      "scroll": 305,
+      "steps": 6,
+      "title": "Mengubah dan mengatur posisi tubuh",
+      "width": 305
+    }
+  ],
+  "mobile390": {
+    "columns": "338.667px",
+    "scroll": 375,
+    "width": 375
+  },
+  "desktop1440": {
+    "noOverflow": true,
+    "columns": 2
+  },
+  "search": {
+    "query": "nasogastric",
+    "results": 5
+  },
+  "favoritePersistence": true,
+  "crossLanguageFavorite": true,
+  "copyPrompt": true,
+  "autoTranslationSuppressed": true,
+  "printDialogTested": false,
+  "productionPortalPublished": false
+}
