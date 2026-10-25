@@ -1,1 +1,0 @@
-const fs=require('node:fs'),path=require('node:path');const root=path.join(__dirname,'..');const DATA=Object.fromEntries(['zh-Hant','en','vi','id'].map(l=>[l,JSON.parse(fs.readFileSync(path.join(root,'content',l+'.json'),'utf8'))]));fs.writeFileSync(path.join(root,'data.js'),'const DATA = '+JSON.stringify(DATA)+';'+String.fromCharCode(10));console.log('Built four languages.');
