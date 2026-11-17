@@ -306,7 +306,7 @@ button:focus-visible,input:focus-visible{outline:3px solid var(--accent);outline
   document.addEventListener('fullscreenchange',()=>{$('fullBtn').textContent=document.fullscreenElement?'離開全螢幕':'全螢幕'});
   // Only the upper-right handle may reorder. Delay activation to avoid accidental movement on tablets.
   // After activation, slide-to-INSERT moves crossed cards aside one by one.
-  const HOLD_MS=600;
+  const HOLD_MS=200;
   const EARLY_MOVE_TOLERANCE=11;
   let drag=null;
   function startDrag(e){
