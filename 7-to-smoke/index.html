@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#10151d">
-<title>7 TO SMOKE｜計分板</title>
+<title>學長批組五人七之一｜計分板</title>
 <style>
 :root{color-scheme:dark;--bg:#10151d;--panel:#1a222c;--panel2:#202b37;--line:#384554;--text:#f3f5f8;--muted:#aebaca;--accent:#68d6c7;--accentbg:rgba(104,214,199,.12);--orange:#efbf71;--danger:#ec9191}
 *{box-sizing:border-box}
@@ -45,12 +45,50 @@ button:focus-visible,input:focus-visible{outline:3px solid var(--accent);outline
 @media(min-width:1100px){.player{--w:clamp(125px,7.55vw,152px)}.player{min-height:258px}}
 @media(max-width:680px){.wrap{padding:16px}.header{margin-bottom:15px}.heading h1{font-size:27px}.battle-box{padding:14px;margin-bottom:23px}.battle-row{grid-template-columns:minmax(0,1fr) 31px minmax(0,1fr);gap:6px}.competitor{padding:14px 7px;gap:8px}.competitor .battle-name{font-size:19px}.competitor .battle-score{font-size:33px}.vs{font-size:19px}.battle-actions .btn{min-width:0;flex:1;font-size:13px;padding:9px 6px}.section-label span{display:none}.admin{gap:12px}.separator{display:none}.player{--w:130px}}
 @media(prefers-reduced-motion:reduce){.btn,.toast,.board-scroller{transition:none;scroll-behavior:auto}}
+
+/* Tablet-first 4 × 3 scoreboard: all 12 cards stay visible without horizontal scrolling. */
+.wrap{max-width:1500px;padding:12px 20px}
+.header{margin-bottom:10px;flex-wrap:nowrap}.heading h1{font-size:clamp(23px,3.3vw,35px)}
+.count-pill{padding:5px 11px}.header-right .btn{min-height:35px;padding:6px 10px}
+.battle-box{padding:10px 14px;margin-bottom:12px}
+.section-label{margin-bottom:8px}.section-label h2{font-size:16px}
+.battle-row{grid-template-columns:minmax(0,1fr) 40px minmax(0,1fr);gap:9px}
+.competitor{padding:7px 10px;gap:3px}.competitor .battle-name{font-size:clamp(18px,2vw,25px)}
+.competitor .battle-score{font-size:clamp(23px,2.8vw,34px)}.competitor .score-sub{display:none}
+.battle-actions{margin-top:7px}.battle-actions .btn{min-height:34px;padding:5px 12px}
+.board-header{margin-bottom:8px}.board-scroller{overflow:visible;padding:2px 2px 3px;scroll-behavior:auto}
+.board{min-width:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;padding:1px}
+.player,.project-mode .player{--w:auto;min-width:0;width:100%;min-height:0;height:clamp(125px,18vh,153px);flex:none;padding:7px 11px;gap:4px;touch-action:none;-webkit-tap-highlight-color:transparent}
+.player.active::after{top:-7px;font-size:9px;padding:1px 6px}
+.player.selected{outline:3px solid var(--orange);outline-offset:-3px;background:#3b3225}
+.player-top{min-height:17px;height:17px}.order{font-size:13px}.grip{font-size:11px;letter-spacing:0;width:auto;min-width:50px;height:22px;padding:0 7px;background:#2b3947;border-radius:5px;color:#e1e8f0;cursor:grab}
+.avatar{display:none}.pname{min-height:22px;height:22px}.name-text{font-size:clamp(13px,1.8vw,17px)}.rename{font-size:16px}
+.seven-bars{flex-direction:row;gap:5px;width:100%;padding:0}.bar{flex:1;min-width:0;height:9px}
+.p-score{font-size:27px;line-height:1.05}.scorer{margin-top:auto;gap:9px}.scorer button{height:30px;min-height:30px;font-size:19px}
+.hint{margin:5px 0 9px;font-size:12px}.admin{padding:9px 12px;gap:10px}.footnote{margin-top:6px;font-size:11px}
+.drag-ghost{max-width:380px}.drag-ghost .grip{pointer-events:none}
+.project-mode .player{height:clamp(120px,20vh,170px)}
+@media(min-width:700px) and (max-height:850px){
+ .wrap{padding:8px 18px}.header{margin-bottom:7px}.battle-box{padding:8px 12px;margin-bottom:8px}
+ .battle-actions{margin-top:5px}.board-header{margin-bottom:5px}.player{height:clamp(117px,16vh,133px);gap:2px;padding:5px 10px}.player-top{min-height:16px;height:16px}.pname{min-height:20px;height:20px}.p-score{font-size:24px}.scorer button{height:28px;min-height:28px}
+ .hint{margin:3px 0 6px}.footnote{display:none}.admin{padding:6px 10px}
+}
+@media(max-width:760px){
+ .wrap{padding:10px}.header{flex-wrap:wrap;gap:8px}.heading h1{font-size:24px}
+ .board{grid-template-columns:repeat(3,minmax(0,1fr));gap:7px}
+ .player{height:140px;padding:7px 5px}.name-text{font-size:13px}
+ .battle-row{grid-template-columns:minmax(0,1fr) 28px minmax(0,1fr);gap:5px}
+ .competitor{padding:8px 5px}.competitor .battle-name{font-size:17px}.competitor .battle-score{font-size:24px}
+ .battle-actions .btn{font-size:12px}.section-label span{display:inline;font-size:11px}
+ .admin{gap:8px}.admin-label{display:none}
+}
+@media(max-width:420px){.board{grid-template-columns:repeat(3,minmax(0,1fr))}.player{height:136px}.header-right{gap:5px}}
 </style>
 </head>
 <body>
 <div class="wrap" id="app">
   <header class="header">
-    <div class="heading"><h1>7 TO SMOKE</h1><p>街舞對戰計分板　·　先取得 7 勝即獲勝</p></div>
+    <div class="heading"><h1>學長批組五人七之一</h1></div>
     <div class="header-right"><div class="count-pill">選手人數 <strong id="total">12</strong></div><button id="viewBtn" class="btn outline">投影模式</button><button id="fullBtn" class="btn outline">全螢幕</button></div>
   </header>
   <div class="champion" id="champion" role="status" aria-live="polite"></div>
@@ -64,9 +102,9 @@ button:focus-visible,input:focus-visible{outline:3px solid var(--accent);outline
     <div class="battle-actions"><button class="btn primary" id="leftWin">左方勝出 ＋1</button><button class="btn primary" id="rightWin">右方勝出 ＋1</button></div>
   </section>
   <section aria-label="所有選手">
-    <div class="board-header"><div class="section-label"><h2>選手順序與分數</h2><span>按住「⠿」拖到另一位選手上，即可交換位置</span></div><div class="board-ctrl"><button id="scrollLeft" class="btn small icon-btn" aria-label="向左捲動">‹</button><button id="scrollRight" class="btn small icon-btn" aria-label="向右捲動">›</button></div></div>
-    <div class="board-scroller" id="scroller" tabindex="0" aria-label="可左右滑動的選手列表"><div class="board" id="board"></div></div>
-    <div class="hint">手機可以左右滑動查看選手；按住選手卡片右上角的「⠿」拖曳交換順序。點選「✎」即可改名字。</div>
+    <div class="board-header"><div class="section-label"><h2>選手順序與分數</h2><span>直接點兩位選手即可交換，也可按住卡片拖曳</span></div></div>
+    <div class="board-scroller" id="scroller" aria-label="所有選手，平板四欄三列顯示"><div class="board" id="board"></div></div>
+    <div class="hint">交換順序：依序點選兩張選手卡片，或按住卡片拖到另一張上方。點「✎」可改名。</div>
   </section>
   <section class="admin" aria-label="管理功能">
     <div class="admin-label">管理設定</div>
@@ -74,7 +112,7 @@ button:focus-visible,input:focus-visible{outline:3px solid var(--accent);outline
     <div class="separator"></div>
     <div class="admin-group"><button id="undo" class="btn small">↶ 復原上一步</button><button id="resetScores" class="btn small">分數歸零</button><button id="resetAll" class="btn small danger">全部重設</button></div>
   </section>
-  <p class="footnote">規則：按「勝出」後，勝者保留在最前方、敗者移到隊伍最後，下一位選手自動遞補挑戰。先拿到 7 勝者獲勝。也可以使用每張選手卡的＋／−手動修正分數。所有資料會自動儲存在這台裝置的瀏覽器中。</p>
+  <p class="footnote">規則：按「勝出」後，勝者保留在最前方、敗者移到隊伍最後，下一位選手自動遞補挑戰。先拿到 7 勝者獲勝。要交換順序可直接連點兩張卡片；也可以使用每張卡的＋／−修正分數。所有資料會自動儲存在這台裝置的瀏覽器中。</p>
 </div>
 <div id="toast" class="toast" role="status" aria-live="polite"></div>
 <script>
@@ -85,7 +123,7 @@ button:focus-visible,input:focus-visible{outline:3px solid var(--accent);outline
   const $=id=>document.getElementById(id);
   const initial=()=>({players:Array.from({length:12},(_,i)=>({id:'p'+(i+1),name:'選手 '+String(i+1).padStart(2,'0'),score:0})),nextId:13,championId:null});
   function load(){try{const obj=JSON.parse(localStorage.getItem(STORAGE_KEY));if(!obj||!Array.isArray(obj.players)||obj.players.length<2||obj.players.length>MAX_PLAYERS)return initial();const seen=new Set();for(const p of obj.players){if(!p||typeof p.id!=='string'||seen.has(p.id)||typeof p.name!=='string'||!Number.isInteger(p.score)||p.score<0||p.score>7)return initial();seen.add(p.id)}return {players:obj.players,nextId:Number.isInteger(obj.nextId)?obj.nextId:13,championId:obj.championId??null}}catch{return initial()}}
-  let state=load(),history=[],project=false,toastTimer;
+  let state=load(),history=[],project=false,toastTimer,selectedId=null;
   const clone=v=>JSON.parse(JSON.stringify(v));
   function save(){try{localStorage.setItem(STORAGE_KEY,JSON.stringify(state))}catch{showToast('瀏覽器無法儲存資料，請勿關閉頁面')}}
   function apply(fn){history.push(clone(state));if(history.length>50)history.shift();fn();syncChampion();save();render()}
@@ -94,9 +132,9 @@ button:focus-visible,input:focus-visible{outline:3px solid var(--accent);outline
   function el(tag,className,text){const node=document.createElement(tag);if(className)node.className=className;if(text!==undefined)node.textContent=text;return node}
   function nameInitial(name){return name.trim().slice(0,1)||'人'}
   function makePlayer(p,index){
-    const card=el('div','player'+(index<2?' active':'')+(state.championId===p.id?' winner':''));card.dataset.id=p.id;
+    const card=el('div','player'+(index<2?' active':'')+(state.championId===p.id?' winner':'')+(selectedId===p.id?' selected':''));card.dataset.id=p.id;card.addEventListener('pointerdown',startDrag);
     const top=el('div','player-top');top.append(el('span','order',String(index+1).padStart(2,'0')));
-    const grip=el('button','grip','⠿');grip.type='button';grip.title='按住拖曳以交換選手順序';grip.setAttribute('aria-label',`移動 ${p.name} 的順序，使用方向鍵可向左右交換`);grip.dataset.dragId=p.id;grip.addEventListener('pointerdown',startDrag);grip.addEventListener('keydown',e=>{if(e.key==='ArrowLeft'||e.key==='ArrowRight'){e.preventDefault();const offset=e.key==='ArrowLeft'?-1:1,idx=state.players.findIndex(x=>x.id===p.id),other=idx+offset;if(other>=0&&other<state.players.length){apply(()=>swap(idx,other));requestAnimationFrame(()=>{const b=document.querySelector(`[data-drag-id="${CSS.escape(p.id)}"]`);b?.focus();b?.scrollIntoView({block:'nearest',inline:'nearest'})})}}});
+    const grip=el('button','grip','移動');grip.type='button';grip.title='點選兩名選手交換，或按住拖曳';grip.setAttribute('aria-label',`移動 ${p.name} 的順序，使用方向鍵可向左右交換`);grip.dataset.dragId=p.id;grip.addEventListener('keydown',e=>{if(e.key==='ArrowLeft'||e.key==='ArrowRight'){e.preventDefault();const offset=e.key==='ArrowLeft'?-1:1,idx=state.players.findIndex(x=>x.id===p.id),other=idx+offset;if(other>=0&&other<state.players.length){apply(()=>swap(idx,other));requestAnimationFrame(()=>{const b=document.querySelector(`[data-drag-id="${CSS.escape(p.id)}"]`);b?.focus();b?.scrollIntoView({block:'nearest',inline:'nearest'})})}}});
     top.append(grip);card.append(top);
     card.append(el('div','avatar',nameInitial(p.name)));
     const name=el('div','pname');const label=el('div','name-text',p.name);label.title=p.name;name.append(label);
@@ -125,24 +163,62 @@ button:focus-visible,input:focus-visible{outline:3px solid var(--accent);outline
   $('undo').addEventListener('click',()=>{if(!history.length)return;state=history.pop();save();render();showToast('已復原上一步')});
   $('resetScores').addEventListener('click',()=>{if(!confirm('確定所有選手分數歸零？\n名字與目前排列順序會保留。'))return;apply(()=>{state.players.forEach(p=>p.score=0);state.championId=null})});
   $('resetAll').addEventListener('click',()=>{if(!confirm('確定全部重設？\n將恢復 12 位預設選手，所有名稱、順序與分數都會重設。'))return;history.push(clone(state));state=initial();save();render();$('scroller').scrollLeft=0});
-  $('scrollLeft').addEventListener('click',()=>$('scroller').scrollBy({left:-420,behavior:'smooth'}));$('scrollRight').addEventListener('click',()=>$('scroller').scrollBy({left:420,behavior:'smooth'}));
+  
   $('viewBtn').addEventListener('click',()=>{project=!project;document.body.classList.toggle('project-mode',project);$('viewBtn').textContent=project?'退出投影模式':'投影模式'});
   $('fullBtn').addEventListener('click',async()=>{try{if(document.fullscreenElement)await document.exitFullscreen();else if(document.documentElement.requestFullscreen)await document.documentElement.requestFullscreen();else showToast('此瀏覽器不支援全螢幕，請使用投影模式')}catch{showToast('瀏覽器未允許全螢幕')}});
   document.addEventListener('fullscreenchange',()=>{$('fullBtn').textContent=document.fullscreenElement?'離開全螢幕':'全螢幕'});
-  // Pointer Events provide touch, pen and mouse drag-to-SWAP (rather than accidental swipe-to-scroll).
-  let drag=null;
-  function startDrag(e){if(e.button!==undefined&&e.button!==0)return;const handle=e.currentTarget,card=handle.closest('.player');if(!card)return; e.preventDefault();
-    const rect=card.getBoundingClientRect();const ghost=card.cloneNode(true);ghost.classList.remove('active','winner');ghost.classList.add('drag-ghost');ghost.style.width=rect.width+'px';ghost.style.height=rect.height+'px';ghost.style.left=rect.left+'px';ghost.style.top=rect.top+'px';ghost.style.display='none';document.body.append(ghost);
-    drag={handle,card,ghost,id:card.dataset.id,startX:e.clientX,startY:e.clientY,pointX:e.clientX,pointY:e.clientY,rect,targetId:null,moving:false,raf:0};
-    handle.setPointerCapture(e.pointerId);handle.addEventListener('pointermove',onMove);handle.addEventListener('pointerup',endDrag);handle.addEventListener('pointercancel',endDrag);
-  }
-  function findTarget(x,y){if(!drag)return;document.querySelectorAll('.drop-target').forEach(n=>n.classList.remove('drop-target'));const target=document.elementFromPoint(x,y)?.closest('.player');drag.targetId=target&&target!==drag.card?target.dataset.id:null;if(target&&target!==drag.card)target.classList.add('drop-target')}
-  function autoScroll(){if(!drag||!drag.moving)return;const box=$('scroller'),r=box.getBoundingClientRect();let velocity=0;if(drag.pointX<r.left+55&&drag.pointX>r.left-30)velocity=-13;else if(drag.pointX>r.right-55&&drag.pointX<r.right+30)velocity=13;if(velocity){box.scrollLeft+=velocity;findTarget(drag.pointX,drag.pointY)}drag.raf=requestAnimationFrame(autoScroll)}
-  function onMove(e){if(!drag)return;drag.pointX=e.clientX;drag.pointY=e.clientY;const dx=e.clientX-drag.startX,dy=e.clientY-drag.startY;if(!drag.moving&&Math.hypot(dx,dy)<5)return;if(!drag.moving){drag.moving=true;drag.card.classList.add('drag-origin');drag.ghost.style.display='flex';drag.raf=requestAnimationFrame(autoScroll)}drag.ghost.style.left=(drag.rect.left+dx)+'px';drag.ghost.style.top=(drag.rect.top+dy)+'px';findTarget(e.clientX,e.clientY)}
-  function endDrag(e){if(!drag)return;const d=drag;d.handle.removeEventListener('pointermove',onMove);d.handle.removeEventListener('pointerup',endDrag);d.handle.removeEventListener('pointercancel',endDrag);if(d.raf)cancelAnimationFrame(d.raf);d.ghost.remove();d.card.classList.remove('drag-origin');document.querySelectorAll('.drop-target').forEach(n=>n.classList.remove('drop-target'));drag=null;
-    if(e.type==='pointercancel'||!d.moving||!d.targetId||d.id===d.targetId)return;
-    const from=state.players.findIndex(p=>p.id===d.id),to=state.players.findIndex(p=>p.id===d.targetId);if(from<0||to<0)return;apply(()=>swap(from,to));showToast('已交換選手位置');
-  }
+   // Touch-friendly interaction: tap two cards to swap, or drag a card onto another.
+   let drag=null;
+   function startDrag(e){
+     if(e.button!==undefined&&e.button!==0)return;
+     if(e.target.closest('.rename,.scorer'))return;
+     const card=e.currentTarget;if(!card.classList.contains('player'))return;
+     e.preventDefault();
+     const rect=card.getBoundingClientRect();const ghost=card.cloneNode(true);
+     ghost.classList.remove('active','winner','selected');ghost.classList.add('drag-ghost');
+     Object.assign(ghost.style,{width:rect.width+'px',height:rect.height+'px',left:rect.left+'px',top:rect.top+'px',display:'none'});
+     document.body.append(ghost);
+     drag={handle:card,card,ghost,id:card.dataset.id,startX:e.clientX,startY:e.clientY,rect,targetId:null,moving:false};
+     card.setPointerCapture(e.pointerId);
+     card.addEventListener('pointermove',onMove);card.addEventListener('pointerup',endDrag);card.addEventListener('pointercancel',endDrag);
+   }
+   function findTarget(x,y){
+     if(!drag)return;
+     document.querySelectorAll('.drop-target').forEach(n=>n.classList.remove('drop-target'));
+     const target=document.elementFromPoint(x,y)?.closest('.player');
+     drag.targetId=target&&target!==drag.card?target.dataset.id:null;
+     if(target&&target!==drag.card)target.classList.add('drop-target');
+   }
+   function onMove(e){
+     if(!drag)return;
+     const dx=e.clientX-drag.startX,dy=e.clientY-drag.startY;
+     if(!drag.moving&&Math.hypot(dx,dy)<9)return;
+     if(!drag.moving){drag.moving=true;drag.card.classList.add('drag-origin');drag.ghost.style.display='flex'}
+     drag.ghost.style.left=(drag.rect.left+dx)+'px';drag.ghost.style.top=(drag.rect.top+dy)+'px';
+     findTarget(e.clientX,e.clientY);
+   }
+   function endDrag(e){
+     if(!drag)return;
+     const d=drag;
+     d.handle.removeEventListener('pointermove',onMove);
+     d.handle.removeEventListener('pointerup',endDrag);
+     d.handle.removeEventListener('pointercancel',endDrag);
+     d.ghost.remove();d.card.classList.remove('drag-origin');
+     document.querySelectorAll('.drop-target').forEach(n=>n.classList.remove('drop-target'));
+     drag=null;
+     if(e.type==='pointercancel')return;
+     if(!d.moving){
+       if(selectedId===d.id){selectedId=null;render();showToast('已取消選取');return}
+       if(!selectedId){selectedId=d.id;render();showToast('已選取，請點另一位選手交換');return}
+       const a=state.players.findIndex(p=>p.id===selectedId),b=state.players.findIndex(p=>p.id===d.id);
+       selectedId=null;if(a>=0&&b>=0&&a!==b){apply(()=>swap(a,b));showToast('已交換選手位置')}else render();return;
+     }
+     selectedId=null;
+     if(!d.targetId||d.id===d.targetId){render();return}
+     const from=state.players.findIndex(p=>p.id===d.id),to=state.players.findIndex(p=>p.id===d.targetId);
+     if(from<0||to<0){render();return}
+     apply(()=>swap(from,to));showToast('已交換選手位置');
+   }
   syncChampion();render();
 })();
 </script>
