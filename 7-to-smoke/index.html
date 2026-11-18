@@ -291,7 +291,7 @@ button:focus-visible,input:focus-visible{outline:3px solid var(--accent);outline
     const entry=prompt(`修正 ${p.name} 的已打場次（0～9999）`,String(p.games));
     if(entry===null)return;
     const raw=entry.trim();
-    if(!/^(0|[1-9]\\d{0,3})$/.test(raw)){showToast('請輸入 0～9999 的整數');return}
+    if(!/^(0|[1-9]\d{0,3})$/.test(raw)){showToast('請輸入 0～9999 的整數');return}
     const games=Number(raw);
     if(games===p.games)return;
     apply(()=>{p.games=games});
