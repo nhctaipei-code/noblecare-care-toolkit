@@ -136,6 +136,11 @@ button:focus-visible,input:focus-visible{outline:3px solid var(--accent);outline
 .timer-controls{display:flex;gap:7px;align-items:center}
 .timer-controls .btn{min-width:70px;min-height:35px;padding:5px 12px}
 @media(max-width:530px){.timer-panel{padding:10px}.timer-controls{width:100%}.timer-controls .btn{flex:1}}
+/* Small games-played badge beside the score, separate from seven-win progress. */
+.games-badge{position:absolute;right:7px;bottom:37px;padding:2px 4px;min-height:17px;border-radius:5px;background:#2d3a49;border:1px solid #495969;color:#d3dfe9;font-size:11px;line-height:1.15;font-weight:700;font-variant-numeric:tabular-nums;white-space:nowrap;z-index:1}
+.games-badge:active{background:#42556b}
+.qualified-games{color:#b8cfc2;font-size:11px;white-space:nowrap}
+@media(max-width:420px){.games-badge{font-size:10px;right:4px;bottom:37px;padding:2px 3px}}
 </style>
 </head>
 <body>
@@ -166,7 +171,7 @@ button:focus-visible,input:focus-visible{outline:3px solid var(--accent);outline
     <div class="admin-label">管理設定</div>
     <div class="admin-group"><span class="label">參賽人數</span><button class="btn small icon-btn" id="minusPlayer" aria-label="減少一位選手">−</button><span class="count-number" id="countText">12</span><button class="btn small icon-btn" id="addPlayer" aria-label="增加一位選手">＋</button></div>
     <div class="separator"></div>
-    <div class="admin-group"><button id="undo" class="btn small">↶ 復原上一步</button><button id="resetScores" class="btn small">分數歸零</button><button id="resetAll" class="btn small danger">全部重設</button></div>
+    <div class="admin-group"><button id="undo" class="btn small">↶ 復原上一步</button><button id="resetScores" class="btn small">分數／場次歸零</button><button id="resetAll" class="btn small danger">全部重設</button></div>
   </section>
   <section class="qualified-panel" aria-label="五位晉級選手">
     <div class="qualified-title"><h2>晉級名單</h2><strong id="qualifiedCount">0 / 5</strong><span>依照取得第 7 勝的先後排列</span></div>
@@ -182,7 +187,7 @@ button:focus-visible,input:focus-visible{outline:3px solid var(--accent);outline
   const MAX_PLAYERS=40;
   const $=id=>document.getElementById(id);
   const TARGET=5;
-  const initial=()=>({players:Array.from({length:12},(_,i)=>({id:'p'+(i+1),name:'選手 '+String(i+1).padStart(2,'0'),score:0})),qualified:[],nextId:13});
+  const initial=()=>({players:Array.from({length:12},(_,i)=>({id:'p'+(i+1),name:'選手 '+String(i+1).padStart(2,'0'),score:0,games:0})),qualified:[],nextId:13});
   function load(){
     try{
       const obj=JSON.parse(localStorage.getItem(STORAGE_KEY));
@@ -194,6 +199,8 @@ button:focus-visible,input:focus-visible{outline:3px solid var(--accent);outline
       const seen=new Set();
       for(const p of [...players,...qualified]){
         if(!p||typeof p.id!=='string'||seen.has(p.id)||typeof p.name!=='string'||!Number.isInteger(p.score)||p.score<0||p.score>7)return initial();
+        // Older rounds recorded only wins; use those as a minimum and allow manual correction.
+        if(!Number.isInteger(p.games)||p.games<0||p.games>9999)p.games=p.score;
         seen.add(p.id);
       }
       if(qualified.length<TARGET){
@@ -222,6 +229,12 @@ button:focus-visible,input:focus-visible{outline:3px solid var(--accent);outline
     const bars=el('div','seven-bars');bars.setAttribute('aria-label',`7 格分數，目前 ${p.score} 勝`);
     for(let i=0;i<7;i++)bars.append(el('div','bar'+(i<p.score?' filled':'')));card.append(bars);
     card.append(el('div','p-score',String(p.score)));
+    const played=el('button','games-badge',`場 ${p.games}`);
+    played.type='button';
+    played.title=`${p.name}：已打 ${p.games} 場（點此修正）`;
+    played.setAttribute('aria-label',`${p.name} 已打 ${p.games} 場，點擊可修正場次`);
+    played.addEventListener('click',()=>editGames(p.id));
+    card.append(played);
     const controls=el('div','scorer');const minus=el('button','btn small','−'),plus=el('button','btn small','＋');minus.title=`${p.name} 減一分`;plus.title=`${p.name} 加一分`;minus.setAttribute('aria-label',minus.title);plus.setAttribute('aria-label',plus.title);minus.disabled=p.score===0;plus.disabled=p.score>=7;minus.addEventListener('click',()=>changeScore(p.id,-1));plus.addEventListener('click',()=>changeScore(p.id,1));controls.append(minus,plus);card.append(controls);
     return card;
   }
@@ -246,6 +259,9 @@ button:focus-visible,input:focus-visible{outline:3px solid var(--accent);outline
         const p=state.qualified[i];
         slot.append(el('span','qualified-rank',String(i+1)+'.'));
         slot.append(el('span','qualified-name',p.name));
+        const played=el('span','qualified-games',`場 ${p.games}`);
+        played.title=`已打 ${p.games} 場`;
+        slot.append(played);
         const edit=el('button','qualified-edit','✎');edit.title=`修改 ${p.name} 名稱`;edit.setAttribute('aria-label',edit.title);edit.addEventListener('click',()=>renamePlayer(p.id));slot.append(edit);
       }else slot.textContent=`第 ${i+1} 位`;
       slots.append(slot);
@@ -269,6 +285,17 @@ button:focus-visible,input:focus-visible{outline:3px solid var(--accent);outline
     const next=text.trim().slice(0,24);if(!next){showToast('名稱不能空白');return}if(next===p.name)return;
     apply(()=>{p.name=next});
   }
+  function editGames(id){
+    const p=[...state.players,...state.qualified].find(player=>player.id===id);
+    if(!p)return;
+    const entry=prompt(`修正 ${p.name} 的已打場次（0～9999）`,String(p.games));
+    if(entry===null)return;
+    const raw=entry.trim();
+    if(!/^(0|[1-9]\\d{0,3})$/.test(raw)){showToast('請輸入 0～9999 的整數');return}
+    const games=Number(raw);
+    if(games===p.games)return;
+    apply(()=>{p.games=games});
+  }
   function changeScore(id,amount){
     const p=state.players.find(p=>p.id===id);if(!p)return;
     if(state.qualified.length>=TARGET&&amount>0){showToast('已產生五位晉級者，請先復原上一場');return}
@@ -282,6 +309,8 @@ button:focus-visible,input:focus-visible{outline:3px solid var(--accent);outline
     apply(()=>{
       const [left,right]=state.players.splice(0,2);
       const winner=winningIndex===0?left:right,loser=winningIndex===0?right:left;
+      winner.games=Math.min(9999,winner.games+1);
+      loser.games=Math.min(9999,loser.games+1);
       winner.score=Math.min(7,winner.score+1);
       // 一般勝負：贏家守擂（第 1 順位），輸家回到隊尾。
       state.players.unshift(winner);
@@ -295,13 +324,15 @@ button:focus-visible,input:focus-visible{outline:3px solid var(--accent);outline
     apply(()=>{
       // OT 雙方均不加分，原第 1 位擂主在前、原第 2 位挑戰者在後。
       const [holder,challenger]=state.players.splice(0,2);
+      holder.games=Math.min(9999,holder.games+1);
+      challenger.games=Math.min(9999,challenger.games+1);
       state.players.push(holder,challenger);
     });
     showToast('OT：雙方排到隊尾，擂主順位仍在前');
   }
   function addPlayer(){
     if(state.players.length+state.qualified.length>=MAX_PLAYERS){showToast('最多 40 位選手');return}
-    apply(()=>{const n=state.nextId++;state.players.push({id:'p'+n,name:'選手 '+String(n).padStart(2,'0'),score:0})});
+    apply(()=>{const n=state.nextId++;state.players.push({id:'p'+n,name:'選手 '+String(n).padStart(2,'0'),score:0,games:0})});
   }
   function removePlayer(){
     if(!state.players.length)return;
@@ -311,7 +342,7 @@ button:focus-visible,input:focus-visible{outline:3px solid var(--accent);outline
   }
   $('leftWin').addEventListener('click',()=>battle(0));$('rightWin').addEventListener('click',()=>battle(1));$('otBtn').addEventListener('click',otRound);$('addPlayer').addEventListener('click',addPlayer);$('minusPlayer').addEventListener('click',removePlayer);
   $('undo').addEventListener('click',()=>{if(!history.length)return;state=history.pop();save();render();showToast('已復原上一步')});
-  $('resetScores').addEventListener('click',()=>{if(!confirm('確定所有選手分數歸零？\n晉級者會返回候場名單，名字將保留。'))return;apply(()=>{state.players.push(...state.qualified);state.qualified=[];state.players.forEach(p=>p.score=0)})});
+  $('resetScores').addEventListener('click',()=>{if(!confirm('確定所有選手分數與場次都歸零？\n晉級者會返回候場名單，名字將保留。'))return;apply(()=>{state.players.push(...state.qualified);state.qualified=[];state.players.forEach(p=>{p.score=0;p.games=0})})});
   $('resetAll').addEventListener('click',()=>{if(!confirm('確定全部重設？\n將恢復 12 位預設選手，所有名稱、順序與分數都會重設。'))return;history.push(clone(state));state=initial();save();render();$('scroller').scrollLeft=0});
   
   $('viewBtn').addEventListener('click',()=>{project=!project;document.body.classList.toggle('project-mode',project);$('viewBtn').textContent=project?'退出投影模式':'投影模式'});
