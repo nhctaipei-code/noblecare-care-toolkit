@@ -216,6 +216,126 @@ html:-webkit-full-screen .wrap{
   html:fullscreen .footnote,
   html:-webkit-full-screen .footnote{display:none}
 }
+
+/* Single-screen landscape control: the timer is always visible as a bottom dock. */
+.timer-panel{
+  position:fixed;left:50%;bottom:max(7px, env(safe-area-inset-bottom,0px));
+  transform:translateX(-50%);width:min(94vw,690px);
+  max-width:calc(100vw - 20px);z-index:400;
+  display:flex;flex-wrap:nowrap;align-items:center;justify-content:space-between;
+  gap:14px;margin:0;padding:5px 10px;min-height:44px;
+  background:#1a2630;border:1px solid #5c6d77;border-radius:10px;
+  box-shadow:0 5px 23px rgba(0,0,0,.53)
+}
+.timer-main{gap:10px}
+.timer-label{font-size:13px}
+.timer-time{font-size:clamp(23px,2.9vw,30px);line-height:1;font-variant-numeric:tabular-nums}
+.timer-controls{gap:6px;flex-wrap:nowrap}
+.timer-controls .btn{min-width:59px;min-height:30px;padding:4px 9px;font-size:13px}
+.wrap{padding-bottom:calc(68px + env(safe-area-inset-bottom,0px))}
+@media(max-width:540px){
+ .timer-panel{width:calc(100vw - 14px);gap:6px;padding:4px 7px}
+ .timer-label{display:none}
+ .timer-time{font-size:24px}
+ .timer-controls .btn{min-width:53px;padding:4px 7px}
+}
+/* Full-screen: keep a top clear zone for iPad exit controls and use compact tiles.
+   Non-supporting browsers may still use the same layout via the fit-screen class. */
+body.fit-screen .wrap,
+html:fullscreen .wrap,
+html:-webkit-full-screen .wrap{
+  max-width:none;width:100%;
+  padding-top:max(55px,calc(env(safe-area-inset-top,0px) + 35px));
+  padding-left:clamp(10px,1.4vw,20px);
+  padding-right:clamp(10px,1.4vw,20px);
+  padding-bottom:8px;
+}
+body.fit-screen .header,
+html:fullscreen .header,
+html:-webkit-full-screen .header{margin-bottom:4px;gap:8px}
+body.fit-screen .heading h1,
+html:fullscreen .heading h1,
+html:-webkit-full-screen .heading h1{font-size:clamp(19px,2.4vw,26px)}
+body.fit-screen .header-right .btn,
+html:fullscreen .header-right .btn,
+html:-webkit-full-screen .header-right .btn{min-height:30px;padding:3px 8px;font-size:12px}
+body.fit-screen .count-pill,
+html:fullscreen .count-pill,
+html:-webkit-full-screen .count-pill{padding:3px 8px;font-size:12px}
+body.fit-screen .battle-box,
+html:fullscreen .battle-box,
+html:-webkit-full-screen .battle-box{padding:5px 9px;margin-bottom:5px}
+body.fit-screen .section-label,
+html:fullscreen .section-label,
+html:-webkit-full-screen .section-label{margin-bottom:2px}
+body.fit-screen .section-label h2,
+html:fullscreen .section-label h2,
+html:-webkit-full-screen .section-label h2{font-size:14px}
+body.fit-screen .section-label span,
+html:fullscreen .section-label span,
+html:-webkit-full-screen .section-label span{font-size:11px}
+body.fit-screen .competitor,
+html:fullscreen .competitor,
+html:-webkit-full-screen .competitor{padding:2px 7px;gap:0}
+body.fit-screen .competitor .role,
+html:fullscreen .competitor .role,
+html:-webkit-full-screen .competitor .role{font-size:10px}
+body.fit-screen .competitor .battle-name,
+html:fullscreen .competitor .battle-name,
+html:-webkit-full-screen .competitor .battle-name{font-size:18px}
+body.fit-screen .competitor .battle-score,
+html:fullscreen .competitor .battle-score,
+html:-webkit-full-screen .competitor .battle-score{font-size:23px}
+body.fit-screen .battle-actions,
+html:fullscreen .battle-actions,
+html:-webkit-full-screen .battle-actions{margin-top:3px}
+body.fit-screen .battle-actions .btn,
+html:fullscreen .battle-actions .btn,
+html:-webkit-full-screen .battle-actions .btn{min-height:29px;padding:3px 9px;font-size:12px}
+body.fit-screen .board-header,
+html:fullscreen .board-header,
+html:-webkit-full-screen .board-header{margin-bottom:3px}
+body.fit-screen .board,
+html:fullscreen .board,
+html:-webkit-full-screen .board{gap:5px}
+body.fit-screen .player,
+html:fullscreen .player,
+html:-webkit-full-screen .player{
+  height:101px;min-height:0;padding:3px 7px;gap:1px
+}
+body.fit-screen .player-top,
+html:fullscreen .player-top,
+html:-webkit-full-screen .player-top{height:16px;min-height:16px}
+body.fit-screen .pname,
+html:fullscreen .pname,
+html:-webkit-full-screen .pname{height:18px;min-height:18px}
+body.fit-screen .p-score,
+html:fullscreen .p-score,
+html:-webkit-full-screen .p-score{font-size:21px}
+body.fit-screen .scorer button,
+html:fullscreen .scorer button,
+html:-webkit-full-screen .scorer button{height:24px;min-height:24px;font-size:17px}
+body.fit-screen .games-badge,
+html:fullscreen .games-badge,
+html:-webkit-full-screen .games-badge{bottom:30px;font-size:10px}
+body.fit-screen .admin,
+html:fullscreen .admin,
+html:-webkit-full-screen .admin{padding:4px 8px;gap:7px;margin-top:4px}
+body.fit-screen .admin .btn,
+html:fullscreen .admin .btn,
+html:-webkit-full-screen .admin .btn{min-height:29px}
+body.fit-screen .qualified-panel,
+html:fullscreen .qualified-panel,
+html:-webkit-full-screen .qualified-panel{margin:5px 0 0;padding:5px 8px}
+body.fit-screen .qualified-title,
+html:fullscreen .qualified-title,
+html:-webkit-full-screen .qualified-title{margin-bottom:3px}
+body.fit-screen .qualified-slot,
+html:fullscreen .qualified-slot,
+html:-webkit-full-screen .qualified-slot{min-height:34px;padding:3px 5px}
+body.fit-screen .footnote,
+html:fullscreen .footnote,
+html:-webkit-full-screen .footnote{display:none}
 </style>
 </head>
 <body>
@@ -248,12 +368,12 @@ html:-webkit-full-screen .wrap{
     <div class="qualified-title"><h2>晉級名單</h2><strong id="qualifiedCount">0 / 5</strong><span>依照取得第 7 勝的先後排列</span></div>
     <div class="qualified-list" id="qualifiedList"></div>
   </section>
+  <p class="footnote">規則：一般對戰贏家＋1 勝並留在第 1 順位，輸家排到隊尾，下一位上場挑戰。OT 不計分，雙方一起排隊尾，擂主仍排在挑戰者前面；例如 12 人時擂主第 11、挑戰者第 12 順位。選手滿 7 勝即自動晉級，最先 5 人晉級後比賽結束。資料儲存在本裝置瀏覽器。</p>
+</div>
   <section class="timer-panel" aria-label="90 分鐘倒數計時">
     <div class="timer-main"><span class="timer-label">90 分鐘倒數</span><span class="timer-time" id="timerDisplay" role="timer" aria-live="off">90:00</span></div>
     <div class="timer-controls"><button class="btn primary" type="button" id="timerStart">開始</button><button class="btn" type="button" id="timerPause">暫停</button><button class="btn" type="button" id="timerReset">重置</button></div>
   </section>
-  <p class="footnote">規則：一般對戰贏家＋1 勝並留在第 1 順位，輸家排到隊尾，下一位上場挑戰。OT 不計分，雙方一起排隊尾，擂主仍排在挑戰者前面；例如 12 人時擂主第 11、挑戰者第 12 順位。選手滿 7 勝即自動晉級，最先 5 人晉級後比賽結束。資料儲存在本裝置瀏覽器。</p>
-</div>
 <div id="toast" class="toast" role="status" aria-live="polite"></div>
 <script>
 (() => {
@@ -342,6 +462,7 @@ html:-webkit-full-screen .wrap{
       slots.append(slot);
     }
     $('qualifiedList').replaceChildren(slots);
+    queueFit();
   }
   function qualify(player){
     if(player.score<7||state.qualified.some(p=>p.id===player.id)||state.qualified.length>=TARGET)return false;
@@ -421,8 +542,63 @@ html:-webkit-full-screen .wrap{
   $('resetAll').addEventListener('click',()=>{if(!confirm('確定全部重設？\n將恢復 12 位預設選手，所有名稱、順序與分數都會重設。'))return;history.push(clone(state));state=initial();save();render();$('scroller').scrollLeft=0});
   
   $('viewBtn').addEventListener('click',()=>{project=!project;document.body.classList.toggle('project-mode',project);$('viewBtn').textContent=project?'退出投影模式':'投影模式'});
-  $('fullBtn').addEventListener('click',async()=>{try{if(document.fullscreenElement)await document.exitFullscreen();else if(document.documentElement.requestFullscreen)await document.documentElement.requestFullscreen();else showToast('此瀏覽器不支援全螢幕，請使用投影模式')}catch{showToast('瀏覽器未允許全螢幕')}});
-  document.addEventListener('fullscreenchange',()=>{$('fullBtn').textContent=document.fullscreenElement?'離開全螢幕':'全螢幕'});
+  // iPad Safari does not always support fullscreen for normal pages.
+  // The 'fit-screen' layout still works, with all scoreboard sections and the dock visible.
+  let fitQueued=false;
+  function resetFit(){
+    const app=$('app');
+    app.style.zoom='';
+    app.style.width='';
+  }
+  function fitScreenToViewport(){
+    fitQueued=false;
+    if(!document.body.classList.contains('fit-screen')&&!document.fullscreenElement){
+      resetFit();return;
+    }
+    const app=$('app'),timer=$('timerDisplay').closest('.timer-panel');
+    app.style.zoom='1';app.style.width='100%';
+    const available=timer.getBoundingClientRect().top-8;
+    const used=app.getBoundingClientRect().bottom;
+    if(used>available && available>0){
+      const ratio=Math.max(.7,Math.min(1,(available-3)/used));
+      app.style.zoom=String(ratio);
+      app.style.width=(100/ratio)+'%';
+    }
+  }
+  function queueFit(){
+    if(fitQueued)return;
+    fitQueued=true;
+    requestAnimationFrame(fitScreenToViewport);
+  }
+  $('fullBtn').addEventListener('click',async()=>{
+    if(document.body.classList.contains('fit-screen')){
+      document.body.classList.remove('fit-screen');
+      if(document.fullscreenElement)try{await document.exitFullscreen()}catch{}
+      resetFit();
+      $('fullBtn').textContent='全螢幕';
+      return;
+    }
+    document.body.classList.add('fit-screen');
+    $('fullBtn').textContent='退出全螢幕';
+    queueFit();
+    if(document.documentElement.requestFullscreen){
+      try{await document.documentElement.requestFullscreen()}
+      catch{ /* Keep the one-screen layout even without native fullscreen. */ }
+    }
+    queueFit();
+  });
+  document.addEventListener('fullscreenchange',()=>{
+    if(!document.fullscreenElement){
+      document.body.classList.remove('fit-screen');
+      resetFit();
+    }else{
+      document.body.classList.add('fit-screen');
+    }
+    $('fullBtn').textContent=document.body.classList.contains('fit-screen')?'退出全螢幕':'全螢幕';
+    queueFit();
+  });
+  window.addEventListener('resize',queueFit);
+  window.addEventListener('orientationchange',queueFit);
   // Only the upper-right handle may reorder. Delay activation to avoid accidental movement on tablets.
   // After activation, slide-to-INSERT moves crossed cards aside one by one.
   const HOLD_MS=200;
