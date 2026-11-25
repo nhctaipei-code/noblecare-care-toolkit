@@ -127,7 +127,7 @@ button:focus-visible,input:focus-visible{outline:3px solid var(--accent);outline
  .qualified-title{margin-bottom:4px}.qualified-slot{min-height:39px}
 }
 
-/* 30-minute countdown timer, clearly readable on tablets and phones. */
+/* 90-minute countdown timer, clearly readable on tablets and phones. */
 .timer-panel{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;padding:9px 13px;margin:0 0 10px;background:var(--panel);border:1px solid var(--line);border-radius:12px}
 .timer-main{display:flex;align-items:center;gap:13px;min-width:0}
 .timer-label{font-size:14px;color:var(--muted);font-weight:700;white-space:nowrap}
@@ -149,8 +149,8 @@ button:focus-visible,input:focus-visible{outline:3px solid var(--accent);outline
     <div class="heading"><h1>學爽P組五人</h1></div>
     <div class="header-right"><div class="count-pill">候場 <strong id="total">12</strong> 人</div><button id="viewBtn" class="btn outline">投影模式</button><button id="fullBtn" class="btn outline">全螢幕</button></div>
   </header>
-  <section class="timer-panel" aria-label="30 分鐘倒數計時">
-    <div class="timer-main"><span class="timer-label">30 分鐘倒數</span><span class="timer-time" id="timerDisplay" role="timer" aria-live="off">30:00</span></div>
+  <section class="timer-panel" aria-label="90 分鐘倒數計時">
+    <div class="timer-main"><span class="timer-label">90 分鐘倒數</span><span class="timer-time" id="timerDisplay" role="timer" aria-live="off">90:00</span></div>
     <div class="timer-controls"><button class="btn primary" type="button" id="timerStart">開始</button><button class="btn" type="button" id="timerPause">暫停</button><button class="btn" type="button" id="timerReset">重置</button></div>
   </section>
   <div class="champion" id="champion" role="status" aria-live="polite"></div>
@@ -438,8 +438,8 @@ button:focus-visible,input:focus-visible{outline:3px solid var(--accent);outline
 
   // Countdown is separate from match data. Wall-clock timestamps prevent timer drift
   // when the browser reduces interval frequency or the iPad locks its screen.
-  const TIMER_STORAGE_KEY='seven_to_smoke_30min_timer_v1';
-  const TIMER_DURATION_MS=30*60*1000;
+  const TIMER_STORAGE_KEY='seven_to_smoke_90min_timer_v1';
+  const TIMER_DURATION_MS=90*60*1000;
   let timerRemainingMs=TIMER_DURATION_MS;
   let timerEndTimestamp=null;
   try{
@@ -464,7 +464,7 @@ button:focus-visible,input:focus-visible{outline:3px solid var(--accent);outline
     if(timerEndTimestamp!==null && remaining===0){
       timerRemainingMs=0;timerEndTimestamp=null;
       saveTimer();
-      showToast('30 分鐘倒數結束');
+      showToast('90 分鐘倒數結束');
     }
     const seconds=Math.ceil(remaining/1000);
     const m=String(Math.floor(seconds/60)).padStart(2,'0');
