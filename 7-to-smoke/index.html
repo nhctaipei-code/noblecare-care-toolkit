@@ -141,6 +141,22 @@ button:focus-visible,input:focus-visible{outline:3px solid var(--accent);outline
 .games-badge:active{background:#42556b}
 .qualified-games{color:#b8cfc2;font-size:11px;white-space:nowrap}
 @media(max-width:420px){.games-badge{font-size:10px;right:4px;bottom:37px;padding:2px 3px}}
+
+/* Fullscreen safe area: leave space above for iPad/browser close controls. */
+html:fullscreen,
+html:-webkit-full-screen{overflow:auto;background:var(--bg)}
+html:fullscreen .wrap,
+html:-webkit-full-screen .wrap{
+  max-width:min(1400px,94vw);
+  padding-top:max(72px,calc(env(safe-area-inset-top,0px) + 44px));
+  padding-left:clamp(18px,2.3vw,32px);
+  padding-right:clamp(18px,2.3vw,32px);
+  padding-bottom:max(20px,env(safe-area-inset-bottom,0px));
+}
+@media(max-height:700px){
+ html:fullscreen .wrap,
+ html:-webkit-full-screen .wrap{padding-top:max(56px,calc(env(safe-area-inset-top,0px) + 36px))}
+}
 </style>
 </head>
 <body>
