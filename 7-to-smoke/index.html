@@ -157,6 +157,65 @@ html:-webkit-full-screen .wrap{
  html:fullscreen .wrap,
  html:-webkit-full-screen .wrap{padding-top:max(56px,calc(env(safe-area-inset-top,0px) + 36px))}
 }
+
+/* Timer follows the document after the five qualification slots; it is never fixed. */
+.timer-panel{position:static;margin:10px 0 8px}
+
+/* Compact layout while fullscreen, reserving room for the tablet exit control. */
+@media (min-width:760px) and (orientation:landscape){
+  html:fullscreen .wrap,
+  html:-webkit-full-screen .wrap{
+    max-width:min(1400px,96vw);
+    padding-top:max(62px,calc(env(safe-area-inset-top,0px) + 42px));
+    padding-left:clamp(12px,1.7vw,24px);
+    padding-right:clamp(12px,1.7vw,24px);
+    padding-bottom:max(12px,env(safe-area-inset-bottom,0px));
+  }
+  html:fullscreen .header,
+  html:-webkit-full-screen .header{margin-bottom:5px}
+  html:fullscreen .heading h1,
+  html:-webkit-full-screen .heading h1{font-size:clamp(21px,2.6vw,29px)}
+  html:fullscreen .battle-box,
+  html:-webkit-full-screen .battle-box{padding:6px 10px;margin-bottom:7px}
+  html:fullscreen .section-label,
+  html:-webkit-full-screen .section-label{margin-bottom:3px}
+  html:fullscreen .competitor,
+  html:-webkit-full-screen .competitor{padding:2px 7px;gap:1px}
+  html:fullscreen .competitor .role,
+  html:-webkit-full-screen .competitor .role{font-size:11px}
+  html:fullscreen .competitor .battle-name,
+  html:-webkit-full-screen .competitor .battle-name{font-size:19px}
+  html:fullscreen .competitor .battle-score,
+  html:-webkit-full-screen .competitor .battle-score{font-size:24px}
+  html:fullscreen .battle-actions,
+  html:-webkit-full-screen .battle-actions{margin-top:3px}
+  html:fullscreen .battle-actions .btn,
+  html:-webkit-full-screen .battle-actions .btn{min-height:29px;padding:3px 9px}
+  html:fullscreen .board-header,
+  html:-webkit-full-screen .board-header{margin-bottom:4px}
+  html:fullscreen .board,
+  html:-webkit-full-screen .board{gap:6px}
+  html:fullscreen .player,
+  html:-webkit-full-screen .player{height:clamp(108px,13.4dvh,116px);padding:4px 9px;gap:1px}
+  html:fullscreen .player-top,
+  html:-webkit-full-screen .player-top{height:15px;min-height:15px}
+  html:fullscreen .pname,
+  html:-webkit-full-screen .pname{height:19px;min-height:19px}
+  html:fullscreen .p-score,
+  html:-webkit-full-screen .p-score{font-size:23px}
+  html:fullscreen .scorer button,
+  html:-webkit-full-screen .scorer button{height:26px;min-height:26px}
+  html:fullscreen .admin,
+  html:-webkit-full-screen .admin{padding:5px 9px;gap:8px}
+  html:fullscreen .qualified-panel,
+  html:-webkit-full-screen .qualified-panel{margin-top:6px;padding:6px 9px}
+  html:fullscreen .qualified-title,
+  html:-webkit-full-screen .qualified-title{margin-bottom:4px}
+  html:fullscreen .qualified-slot,
+  html:-webkit-full-screen .qualified-slot{min-height:36px;padding:4px 6px}
+  html:fullscreen .footnote,
+  html:-webkit-full-screen .footnote{display:none}
+}
 </style>
 </head>
 <body>
@@ -165,10 +224,6 @@ html:-webkit-full-screen .wrap{
     <div class="heading"><h1>學爽P組五人</h1></div>
     <div class="header-right"><div class="count-pill">候場 <strong id="total">12</strong> 人</div><button id="viewBtn" class="btn outline">投影模式</button><button id="fullBtn" class="btn outline">全螢幕</button></div>
   </header>
-  <section class="timer-panel" aria-label="90 分鐘倒數計時">
-    <div class="timer-main"><span class="timer-label">90 分鐘倒數</span><span class="timer-time" id="timerDisplay" role="timer" aria-live="off">90:00</span></div>
-    <div class="timer-controls"><button class="btn primary" type="button" id="timerStart">開始</button><button class="btn" type="button" id="timerPause">暫停</button><button class="btn" type="button" id="timerReset">重置</button></div>
-  </section>
   <div class="champion" id="champion" role="status" aria-live="polite"></div>
   <section class="battle-box" aria-label="目前對戰">
     <div class="section-label"><h2>目前對戰</h2><span>勝者留場；OT 雙方下場，由後面選手遞補</span></div>
@@ -192,6 +247,10 @@ html:-webkit-full-screen .wrap{
   <section class="qualified-panel" aria-label="五位晉級選手">
     <div class="qualified-title"><h2>晉級名單</h2><strong id="qualifiedCount">0 / 5</strong><span>依照取得第 7 勝的先後排列</span></div>
     <div class="qualified-list" id="qualifiedList"></div>
+  </section>
+  <section class="timer-panel" aria-label="90 分鐘倒數計時">
+    <div class="timer-main"><span class="timer-label">90 分鐘倒數</span><span class="timer-time" id="timerDisplay" role="timer" aria-live="off">90:00</span></div>
+    <div class="timer-controls"><button class="btn primary" type="button" id="timerStart">開始</button><button class="btn" type="button" id="timerPause">暫停</button><button class="btn" type="button" id="timerReset">重置</button></div>
   </section>
   <p class="footnote">規則：一般對戰贏家＋1 勝並留在第 1 順位，輸家排到隊尾，下一位上場挑戰。OT 不計分，雙方一起排隊尾，擂主仍排在挑戰者前面；例如 12 人時擂主第 11、挑戰者第 12 順位。選手滿 7 勝即自動晉級，最先 5 人晉級後比賽結束。資料儲存在本裝置瀏覽器。</p>
 </div>
